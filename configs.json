@@ -1,0 +1,8 @@
+{
+    "appConfigurations": {
+        "port": 3000,
+        "appversion": "0.1.0",
+        "defaultPath": "apps",
+        "intervalCheckPort": 5000
+    }
+}

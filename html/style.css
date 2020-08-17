@@ -1,0 +1,167 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    background-color: black;
+}
+
+.header {
+    width: 100%;
+    background-color: crimson;
+    color: whitesmoke;
+    text-align: center;
+}
+
+.header > h1 {
+    padding: 16px 0;
+}
+
+.body {
+    width: 100%;
+    padding: 8px 16px;
+    display: flex;
+    flex-direction: row;
+}
+
+.servers-manage {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+}
+
+#listServer {
+    margin-top: 1%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+#create-form {
+    width: 100%;
+    padding: 4px 16px;
+    gap: 10px;
+}
+
+#create-form > input, #create-form > btn {
+    border: none;
+    border-bottom: 1px solid black;
+    padding: 8px 16px;
+    width: 150px;
+}
+
+#system-info {
+    width: 40%;
+    padding: 8px 16px;
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.btn, .btn-status {
+    width: 100px;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: none;
+}
+
+.serv-el {
+    width: 100%;
+    height: 50px;
+    padding: 4px 16px;
+    color: lightgray;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    align-items: center;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+}
+
+.btn-delete, .btn-info {
+    width: 25px;
+    text-decoration: none;
+    padding: 4px 8px;
+    background-color: transparent;
+    color: lightgray;
+}
+
+.el-status {
+    margin-left: 25px;
+    height: 25px;
+    min-width: 25px;
+    border-radius: 25px;
+}
+
+.off {
+    background-color: red;
+    border: 2px solid rgb(95, 0, 0);
+}
+
+.on {
+    background-color: green;
+    border: 2px solid  rgb(0, 95, 0);
+}
+
+.el-name {
+    font-size: 1.1em;
+    font-weight: bold;
+    width: 200px;
+}
+
+.cpu, .memory {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(243, 243, 243, 0.2);
+    padding: 8px 16px;
+    padding-bottom: 16px;
+    border-radius: 5px;
+}
+
+.cpu > h2, .memory > h2 {
+    padding: 2%;
+}
+
+.cpu > #model, .memory > #model {
+    margin-bottom: 8px;
+}
+
+#cpu-usage, #memory-usage {
+    height: 16px;
+    width: 100%;
+    background-color: white;
+    position: relative;
+    border-radius: 8px;
+}
+
+#cpu-usage-avg, #memory-usage-avg {
+    position: absolute;
+    height: 16px;
+    width: 0%;
+    background-color: red;
+    border-radius: 8px;
+}
+
+#cpu-usage-per, #memory-usage-per {
+    position: absolute;
+    height: 16px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+}
