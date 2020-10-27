@@ -1,0 +1,70 @@
+.grid-container {
+  margin: 20px;
+}
+
+.dashboard-card {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+}
+
+.more-button {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+}
+
+.content {
+  height: 250px;
+  overflow:scroll;
+  overflow-x: hidden;
+}
+
+.progress-bar-text-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.progress-bar-text {
+  position:relative;
+  top: -34px;
+  padding: 4px 8px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.status {
+  width: 25px;
+  height: 25px;
+  border-radius: 25px;
+}
+
+.on {
+  background-color: green;
+}
+
+.off {
+  background-color: red;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  border: none;
+  border-radius: 4px;
+}
+ 
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  border: none;
+}
+ 
+::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  border-radius: 4px;
+  border: none;
+}

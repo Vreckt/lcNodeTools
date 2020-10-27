@@ -34,13 +34,13 @@ io.on('connection', (socket) => {
     socket.on('update status', (el) => {
         apps.list.find(s => s.name == el.name).status = !el.status;
         socket.emit('result', apps.list);
-        updateStatusFromServer(el);
-        saveServers(); 
+        updateStatusFromServer(el, socket);
+        saveServers(socket); 
     });
 
     socket.on('delete', (el) => {
         apps.remove(apps.list.findIndex(a => a.name === el.name));
-        saveServers();
+        saveServers(socket);
         socket.emit('result', apps.list);
     });
 
@@ -49,7 +49,7 @@ io.on('connection', (socket) => {
             socket.emit('errorss', `The application ${s.name} already exist`);
         } else {
             addApplication(data);
-            saveServers();
+            saveServers(socket);
             socket.emit('result', apps.list);
         }
     });
@@ -59,13 +59,14 @@ http.listen(configs.appConfigurations.port, () => {
     console.log(`listening on *:${configs.appConfigurations.port}`);
 });
 
-function saveServers() {
+function saveServers(socket) {
     fs.writeFile('servers.json', JSON.stringify(apps.list), function (err) {
         if (err) return console.log(err);
     });
+    socket.emit('result', apps.list);
 };
 
-function updateStatusFromServer(server) {
+function updateStatusFromServer(server, socket) {
     let cmd = '';
     try {
         if (server.status) {
@@ -78,7 +79,7 @@ function updateStatusFromServer(server) {
             if (err) {
               console.error(err);
             } else {
-             saveServers();
+             saveServers(socket);
             }
         });
     } catch (e) {
@@ -131,7 +132,7 @@ function systemInformations(socket) {
             os: {
                 platform: os.type() + ' ' + os.arch(),
                 release: os.release(),
-                version: os.version(),
+                // version: os.version(),
                 uptime: os.uptime(),
             },
             cpu: {

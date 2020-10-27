@@ -1,13 +1,10 @@
 class ApplicationItem {
-    descripiton;
-    startableFile;
-    status;
 
-    constructor(name, path, port, startableFile = 'server') {
+    constructor(name, path, port, description, startableFile = 'server') {
         this.name = name;
         this.path = path;
         this.port = port;
-        this.descripiton = '';
+        this.descripiton = description;
         this.startableFile = startableFile;
         this.status = false;
     }

@@ -1,5 +1,4 @@
 class ApplicationList {
-    appsList;
 
     constructor() {
         this.appsList = [];

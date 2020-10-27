@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { SocketService } from './shared/services/socket.service';
 
 @Component({
   selector: 'app-root',
@@ -7,19 +7,13 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'ui';
+  title = 'Application Manager';
 
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) {
-    
+  constructor(private socketService: SocketService) {
+    socketService.setupSocketConnection();
   }
 
   ngOnInit(): void {
-    if (!sessionStorage.getItem('user')) {
-      this.router.navigate(['auth']);
-    }
+  //  this.socketService.setupSocketConnection();
   }
-
 }
