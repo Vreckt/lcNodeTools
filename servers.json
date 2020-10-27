@@ -1,7 +1,1 @@
-[{
-    "descripiton":"",
-    "startableFile":"server",
-    "status":false,
-    "name":"Casino server",
-    "path":"/var/www/html/server",
-    "port":"8080"}]
+[{"descripiton":"","startableFile":"server","status":true,"name":"Casino server","path":"/var/www/html/server","port":"8080"}]

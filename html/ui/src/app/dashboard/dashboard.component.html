@@ -11,13 +11,6 @@
         <mat-card-header>
           <mat-card-title>
             NodeJS server
-            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-              <button mat-menu-item>Expand</button>
-              <button mat-menu-item>Remove</button>
-            </mat-menu>
           </mat-card-title>
         </mat-card-header>
         <mat-card-content>
@@ -51,11 +44,11 @@
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu">
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="onEdit(element)">
                       <mat-icon color="accent">edit</mat-icon>
                       <span>Modifier</span>
                     </button>
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="onDelete(element)">
                       <mat-icon color="warn">delete</mat-icon>
                       <span>Supprimer</span>
                     </button>
@@ -75,22 +68,15 @@
         <mat-card-header>
           <mat-card-title>
             Ressources
-            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu" xPosition="before">
-              <button mat-menu-item>Expand</button>
-              <button mat-menu-item>Remove</button>
-            </mat-menu>
           </mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <h1 class="mat-h1">CPU</h1>
           <div id="model">{{model}}</div>
-          <mat-progress-bar mode="determinate" [value]="usage_avg" color="warn" style="height: 40px;">
+          <mat-progress-bar mode="determinate" [value]="usageavg" color="warn" style="height: 40px;">
           </mat-progress-bar>
           <div class="progress-bar-text-container">
-            <span class="progress-bar-text"> {{ usage_per }}</span>
+            <span class="progress-bar-text"> {{ usageavg }}%</span>
           </div>
           <h1 class="mat-h1">Memory</h1>
           <div id="memory-usage">

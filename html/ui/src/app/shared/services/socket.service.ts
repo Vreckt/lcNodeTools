@@ -25,6 +25,10 @@ export class SocketService {
     this.socket.emit('update status', app);
   }
 
+  delete(app: Application): void {
+    this.socket.emit('delete', app);
+  }
+
   systemInfo(): Observable<any> {
     this.socket.on('system-info', (data: string) => {
       this.observer.next(data);
