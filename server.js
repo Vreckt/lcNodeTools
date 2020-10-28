@@ -1,16 +1,16 @@
-var express = require('express');
-var path = require('path');
-var app = require('express')();
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+const express = require('express');
+const path = require('path');
+const app = require('express')();
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 const { exec } = require("child_process");
 const ApplicationItem = require('./models/application.js');
 const ApplicationList = require('./models/applicationList.js');
 fs = require('fs');
-var net = require('net');
-var configs = require('./configs.json');
-var os = require('os');
-var osU = require('os-utils');
+const net = require('net');
+const configs = require('./configs.json');
+const os = require('os');
+const osU = require('os-utils');
 
 const apps = new ApplicationList();
 app.use(express.static(path.join(__dirname, 'html')));
@@ -23,7 +23,7 @@ io.on('connection', (socket) => {
             apps.addInList(el);
         }
     }
-   
+
     socket.on('servers', () => {
         os.cpus()
         socket.emit('result', apps.list);
@@ -35,7 +35,7 @@ io.on('connection', (socket) => {
         apps.list.find(s => s.name == el.name).status = !el.status;
         socket.emit('result', apps.list);
         updateStatusFromServer(el, socket);
-        saveServers(socket); 
+        saveServers(socket);
     });
 
     socket.on('delete', (el) => {
@@ -77,9 +77,9 @@ function updateStatusFromServer(server, socket) {
         }
         exec(cmd, (err, stdout, stderr) => {
             if (err) {
-              console.error(err);
+                console.error(err);
             } else {
-             saveServers(socket);
+                saveServers(socket);
             }
         });
     } catch (e) {
@@ -95,11 +95,11 @@ function portInUse(port, callback) {
 
     server.listen(port, '127.0.0.1');
     server.on('error', (e) => {
-    callback(true);
+        callback(true);
     });
     server.on('listening', (e) => {
-    server.close();
-    callback(false);
+        server.close();
+        callback(false);
     });
 };
 
@@ -112,7 +112,7 @@ function addApplication(data) {
 function listenStatusServer(socket) {
     setInterval(() => {
         for (const server of apps.list) {
-            portInUse(server.port, function(returnValue) {
+            portInUse(server.port, function (returnValue) {
                 if (server.status !== returnValue) {
                     server.status = returnValue;
                     socket.emit('result', apps.list);
@@ -122,37 +122,34 @@ function listenStatusServer(socket) {
     }, configs.appConfigurations.intervalCheckPort);
 }
 
-function coresInfos() {}
-
 function systemInformations(socket) {
     const cpu = os.cpus();
     setInterval(() => {
-    osU.cpuUsage((v) => {
-        let sys = {
-            os: {
-                platform: os.type() + ' ' + os.arch(),
-                release: os.release(),
-                // version: os.version(),
-                uptime: os.uptime(),
-            },
-            cpu: {
-                model: cpu[0].model,
-                nbCore: cpu.length,
-                cores: coresInfos(),
-                usage: v * 100,
-                free: 100 - (v *100)
-            },
-            memory: {
-                total: Number(Number(osU.totalmem() / 1000).toFixed(2)),
-                free: Number(Number(osU.freemem() / 1000).toFixed(2)),
-                used: Number(Number((osU.totalmem() / 1000) - (Number(osU.freemem() / 1000))).toFixed(2)),
-                freeAvg: Number(Number(osU.freememPercentage() * 100).toFixed(2)),
-                usedAvg: Number(Number(100 - (osU.freememPercentage() * 100)).toFixed(2))
-            } 
-        };
-        socket.emit('system-info', sys);
-    });
+        osU.cpuUsage((v) => {
+            let sys = {
+                os: {
+                    platform: os.type() + ' ' + os.arch(),
+                    release: os.release(),
+                    // version: os.version(),
+                    uptime: os.uptime(),
+                },
+                cpu: {
+                    model: cpu[0].model,
+                    nbCore: cpu.length,
+                    cores: coresInfos(),
+                    usage: v * 100,
+                    free: 100 - (v * 100)
+                },
+                memory: {
+                    total: Number(Number(osU.totalmem() / 1000).toFixed(2)),
+                    free: Number(Number(osU.freemem() / 1000).toFixed(2)),
+                    used: Number(Number((osU.totalmem() / 1000) - (Number(osU.freemem() / 1000))).toFixed(2)),
+                    freeAvg: Number(Number(osU.freememPercentage() * 100).toFixed(2)),
+                    usedAvg: Number(Number(100 - (osU.freememPercentage() * 100)).toFixed(2))
+                }
+            };
+            socket.emit('system-info', sys);
+        });
     }, 1000);
-    // return sys
-    
+
 }
