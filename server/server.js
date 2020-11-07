@@ -1,19 +1,40 @@
 var express = require('express');
 var path = require('path');
-var app = require('express')();
+var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 const { exec } = require("child_process");
 const ApplicationItem = require('./models/application.js');
 const ApplicationList = require('./models/applicationList.js');
+const System = require('./models/system.js');
 fs = require('fs');
 var net = require('net');
 var configs = require('./configs.json');
+const multer  = require('multer');
+const cors = require('cors');
+app.use(cors());
+app.options('*', cors());
+
 var os = require('os');
-var osU = require('os-utils');
 
 const apps = new ApplicationList();
 app.use(express.static(path.join(__dirname, 'html')));
+
+var storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './apps/uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname)
+    }
+});
+
+//will be using this for uplading
+const upload = multer({ storage: storage });
+
+app.post('/testUpload', upload.single('file'), function(req,res) {
+    return res.send(req.file);
+})
 
 io.on('connection', (socket) => {
     apps.reset();
@@ -28,7 +49,9 @@ io.on('connection', (socket) => {
         os.cpus()
         socket.emit('result', apps.list);
         listenStatusServer(socket);
-        systemInformations(socket);
+        // systemInformations(socket);
+        console.log('coucou');
+        System.systemInformations(socket, os);
     });
 
     socket.on('update status', (el) => {
@@ -120,39 +143,4 @@ function listenStatusServer(socket) {
             });
         }
     }, configs.appConfigurations.intervalCheckPort);
-}
-
-function coresInfos() {}
-
-function systemInformations(socket) {
-    const cpu = os.cpus();
-    setInterval(() => {
-    osU.cpuUsage((v) => {
-        let sys = {
-            os: {
-                platform: os.type() + ' ' + os.arch(),
-                release: os.release(),
-                // version: os.version(),
-                uptime: os.uptime(),
-            },
-            cpu: {
-                model: cpu[0].model,
-                nbCore: cpu.length,
-                cores: coresInfos(),
-                usage: v * 100,
-                free: 100 - (v *100)
-            },
-            memory: {
-                total: Number(Number(osU.totalmem() / 1000).toFixed(2)),
-                free: Number(Number(osU.freemem() / 1000).toFixed(2)),
-                used: Number(Number((osU.totalmem() / 1000) - (Number(osU.freemem() / 1000))).toFixed(2)),
-                freeAvg: Number(Number(osU.freememPercentage() * 100).toFixed(2)),
-                usedAvg: Number(Number(100 - (osU.freememPercentage() * 100)).toFixed(2))
-            } 
-        };
-        socket.emit('system-info', sys);
-    });
-    }, 1000);
-    // return sys
-    
 }

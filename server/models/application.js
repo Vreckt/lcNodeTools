@@ -9,6 +9,8 @@ class ApplicationItem {
         this.status = false;
     }
 
-    switchStatus() { this.status = !this.status; }
+    switchStatus() { 
+        this.status = !this.status;
+    }
 }
 module.exports = ApplicationItem;

@@ -1,0 +1,66 @@
+<mat-card fxLayout="column" fxLayoutAlign="center" class="card-deploy">
+  <h1>Deploy</h1>
+  <div fxLayout="column" fxLayoutAlign="center" fxLayoutGap="5px">
+    <div fxLayout="row wrap" fxLayoutAlign="space-around">
+      <div fxLayout="column" fxLayoutAlign="center">
+        <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5px" fxLayoutGap.lt-sm="0px">
+          <mat-form-field appearance="fill">
+            <mat-label>Nom</mat-label>
+            <input matInput placeholder="ex. Mon application" type="text" name="name" id="name">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Dossier</mat-label>
+            <input matInput placeholder="ex. app" type="text" name="folder" id="folder">
+          </mat-form-field>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5px" fxLayoutGap.lt-sm="0px">
+          <mat-form-field appearance="fill">
+            <mat-label>port</mat-label>
+            <input matInput placeholder="ex. 3000" type="number" name="port" id="port">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Version</mat-label>
+            <input matInput placeholder="ex. 1.0.0" type="text" name="version" id="version">
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="column" fxLayoutAlign="center">
+        <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="5px" fxLayoutGap.lt-sm="0px">
+          <mat-form-field appearance="fill">
+            <mat-label>Main</mat-label>
+            <input matInput placeholder="ex. index.js" type="text" name="main" id="main">
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-label>Start command</mat-label>
+            <input matInput placeholder="ex. npm run start" type="text" name="start" id="start">
+          </mat-form-field>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="center center"
+        fxLayoutGap="5px" fxLayoutGap.lt-sm="0px">
+          <mat-radio-group aria-label="Select an option"class="example-radio-group">
+            <mat-radio-button value="1"class="example-radio-button">Nouveau</mat-radio-button>
+            <mat-radio-button value="2"class="example-radio-button">Update</mat-radio-button>
+          </mat-radio-group>
+          <mat-form-field appearance="fill"fxFlex="70%">
+            <mat-label>Description</mat-label>
+            <input matInput placeholder="ex. Nouveau site web" type="text" name="description" id="description">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <br>
+    <ngx-dropzone (change)="onSelect($event)" [multiple]="false" class="dropzone">
+      <ngx-dropzone-label>
+        <mat-icon>cloud_upload</mat-icon>
+      </ngx-dropzone-label>
+      <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+        <ngx-dropzone-label class="dropzone-item">{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+      </ngx-dropzone-preview>
+    </ngx-dropzone>
+    <br>
+    <div fxLayout="row" fxLayoutAlign="center" fxLayoutGap="5px">
+      <button mat-raised-button color="primary">Upload</button>
+      <button mat-button color="accent">Reset</button>
+    </div>
+  </div>
+</mat-card>

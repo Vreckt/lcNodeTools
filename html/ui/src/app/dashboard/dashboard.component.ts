@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { SocketService } from '../shared/services/socket.service';
 
@@ -16,7 +16,7 @@ export interface Application {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['status', 'name', 'port', 'filename', 'action'];
   dataSource = new MatTableDataSource<Application>();
 
@@ -44,6 +44,10 @@ export class DashboardComponent implements OnInit {
         this.dataSource.data = data;
       });
     });
+  }
+
+  ngOnDestroy(): void {
+    // disconnect
   }
 
   updateStatus(app: Application): void {

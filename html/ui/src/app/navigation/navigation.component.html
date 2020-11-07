@@ -8,8 +8,9 @@
       <a mat-list-item [routerLink]="['/dashboard']" routerLinkActive="active">
         <span>Dashboard</span>
       </a>
-      <a mat-list-item href="#" disabled>Manager</a>
-      <a mat-list-item href="#" disabled>Deploy</a>
+      <a mat-list-item [routerLink]="['/deploy']">
+        <span>Deploy</span>
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

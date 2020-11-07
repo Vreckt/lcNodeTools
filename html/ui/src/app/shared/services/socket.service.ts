@@ -16,9 +16,13 @@ export class SocketService {
   setupSocketConnection(): void {
     this.socket = io(environment.SOCKET_ENDPOINT);
     console.log('connect');
+    this.setup();
+  }
+
+  setup(): void {
+    this.socket.emit('servers');
     this.systemInfo();
     this.applicationList();
-    this.socket.emit('servers');
   }
 
   updateStatus(app: Application): void {
@@ -27,6 +31,10 @@ export class SocketService {
 
   delete(app: Application): void {
     this.socket.emit('delete', app);
+  }
+
+  deploy(files): void {
+    this.socket.emit('deploy', files);
   }
 
   systemInfo(): Observable<any> {
