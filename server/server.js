@@ -44,7 +44,7 @@ io.on('connection', (socket) => {
             apps.addInList(el);
         }
     }
-   
+
     socket.on('servers', () => {
         os.cpus()
         socket.emit('result', apps.list);
@@ -58,7 +58,7 @@ io.on('connection', (socket) => {
         apps.list.find(s => s.name == el.name).status = !el.status;
         socket.emit('result', apps.list);
         updateStatusFromServer(el, socket);
-        saveServers(socket); 
+        saveServers(socket);
     });
 
     socket.on('delete', (el) => {
@@ -100,9 +100,9 @@ function updateStatusFromServer(server, socket) {
         }
         exec(cmd, (err, stdout, stderr) => {
             if (err) {
-              console.error(err);
+                console.error(err);
             } else {
-             saveServers(socket);
+                saveServers(socket);
             }
         });
     } catch (e) {
@@ -118,11 +118,11 @@ function portInUse(port, callback) {
 
     server.listen(port, '127.0.0.1');
     server.on('error', (e) => {
-    callback(true);
+        callback(true);
     });
     server.on('listening', (e) => {
-    server.close();
-    callback(false);
+        server.close();
+        callback(false);
     });
 };
 
@@ -135,7 +135,7 @@ function addApplication(data) {
 function listenStatusServer(socket) {
     setInterval(() => {
         for (const server of apps.list) {
-            portInUse(server.port, function(returnValue) {
+            portInUse(server.port, function (returnValue) {
                 if (server.status !== returnValue) {
                     server.status = returnValue;
                     socket.emit('result', apps.list);
